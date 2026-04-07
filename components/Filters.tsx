@@ -1,10 +1,11 @@
 'use client';
 
-import { ALL_PLATFORMS, ALL_REGIONS, MONTHS } from '@/lib/data';
+import { ALL_CATEGORIES, ALL_CHANNELS, ALL_CITIES, MONTHS, MONTH_LABELS } from '@/lib/data';
 
 interface FiltersProps {
-  platform: string;
-  region: string;
+  category: string;
+  channel: string;
+  city: string;
   startMonth: number;
   endMonth: number;
   onChange: (key: string, value: string | number) => void;
@@ -12,27 +13,29 @@ interface FiltersProps {
 
 const selectClass =
   'text-sm bg-white border border-[#E8D8C3] rounded-xl px-3 py-2 text-[#3A2F2F] focus:outline-none focus:ring-2 focus:ring-[#A8C3A0]/50 hover:border-[#A8C3A0] transition-colors cursor-pointer';
-
 const labelClass = 'text-[10px] font-semibold text-[#3A2F2F]/40 uppercase tracking-widest mb-1 block';
 
-export default function Filters({ platform, region, startMonth, endMonth, onChange }: FiltersProps) {
+export default function Filters({ category, channel, city, startMonth, endMonth, onChange }: FiltersProps) {
   return (
     <div className="flex flex-wrap gap-4 items-end">
       <div>
-        <label className={labelClass}>Platform</label>
-        <select className={selectClass} value={platform} onChange={(e) => onChange('platform', e.target.value)}>
-          {ALL_PLATFORMS.map((p) => (
-            <option key={p} value={p}>{p}</option>
-          ))}
+        <label className={labelClass}>Category</label>
+        <select className={selectClass} value={category} onChange={(e) => onChange('category', e.target.value)}>
+          {ALL_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
 
       <div>
-        <label className={labelClass}>Region</label>
-        <select className={selectClass} value={region} onChange={(e) => onChange('region', e.target.value)}>
-          {ALL_REGIONS.map((r) => (
-            <option key={r} value={r}>{r}</option>
-          ))}
+        <label className={labelClass}>Channel</label>
+        <select className={selectClass} value={channel} onChange={(e) => onChange('channel', e.target.value)}>
+          {ALL_CHANNELS.map((c) => <option key={c} value={c}>{c}</option>)}
+        </select>
+      </div>
+
+      <div>
+        <label className={labelClass}>City</label>
+        <select className={selectClass} value={city} onChange={(e) => onChange('city', e.target.value)}>
+          {ALL_CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
 
@@ -44,7 +47,7 @@ export default function Filters({ platform, region, startMonth, endMonth, onChan
           onChange={(e) => onChange('startMonth', Number(e.target.value))}
         >
           {MONTHS.map((m, i) => (
-            <option key={m} value={i} disabled={i > endMonth}>{m}</option>
+            <option key={m} value={i} disabled={i > endMonth}>{MONTH_LABELS[m]}</option>
           ))}
         </select>
       </div>
@@ -57,7 +60,7 @@ export default function Filters({ platform, region, startMonth, endMonth, onChan
           onChange={(e) => onChange('endMonth', Number(e.target.value))}
         >
           {MONTHS.map((m, i) => (
-            <option key={m} value={i} disabled={i < startMonth}>{m}</option>
+            <option key={m} value={i} disabled={i < startMonth}>{MONTH_LABELS[m]}</option>
           ))}
         </select>
       </div>
